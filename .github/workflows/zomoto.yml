@@ -57,5 +57,44 @@ jobs:
 
     - name: Create ECS Cluster
       run: |
-          aws ecs create-cluster --cluster-name my-cluster       
+          aws ecs create-cluster --cluster-name my-cluster   
+
+
+   # Create ECS Task Definition
+    - name: Create ECS Task Definition
+      run: |
+          # Create a task definition JSON file dynamically or from a pre-defined template
+          cat > task-definition.json <<EOL
+          {
+            "family": "my-task-definition",
+            "networkMode": "awsvpc",
+            "containerDefinitions": [
+              {
+                "name": "my-container",
+                "image": "${{ secrets.DOCKER_USERNAME }}/zomoto:${{github.run_number}}",
+                "memory": 512,
+                "cpu": 256,
+                "essential": true,
+                "portMappings": [
+                  {
+                    "containerPort": 8080,
+                    "hostPort": 80
+                  }
+                ]
+              }
+            ]
+          }
+          EOL
+
+          # Register the ECS Task Definition
+          aws ecs register-task-definition --cli-input-json file://task-definition.json   
+
+    - name: Run ECS Service
+      run: |
+          aws ecs create-service \
+            --cluster my-cluster \
+            --service-name my-service \
+            --task-definition my-task-definition \
+            --desired-count 1 \
+            --launch-type FARGATE    
     
