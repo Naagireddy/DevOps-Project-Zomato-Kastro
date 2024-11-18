@@ -96,5 +96,5 @@ jobs:
             --service-name my-service \
             --task-definition my-task-definition \
             --desired-count 1 \
-            --launch-type FARGATE    
+            #--launch-type FARGATE    
     
