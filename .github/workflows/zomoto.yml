@@ -55,13 +55,12 @@ jobs:
           echo "${{github.run_number}}"
 
     - name: Build the Docker Image
-	  id: build-image
+      id: build-image
       run: |
            #IMAGE_TAG="zomoto:$(date +'%Y-%m-%d_%H-%M-%S')"
            echo "Building image with tag $IMAGE_TAG"
            docker build . --file Dockerfile --tag $IMAGE_TAG
            #docker build . --file Dockerfile
-
     - name: Push Docker image to DockerHub
       run: |
            #IMAGE_TAG="zomoto" #:$(date +'%Y-%m-%d_%H-%M-%S')"
