@@ -10,7 +10,8 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x, 20.x, 22.x]
+        node-version: [22.x]
+        #[18.x, 20.x, 22.x]
         
     steps:
     - uses: actions/checkout@v4
@@ -37,4 +38,9 @@ jobs:
            echo "Building image with tag $IMAGE_TAG"
            docker build . --file Dockerfile --tag $IMAGE_TAG
            #docker build . --file Dockerfile
+
+    - name: Push Docker image to DockerHub
+      run: |
+           #IMAGE_TAG="myfirstimage" #:$(date +'%Y-%m-%d_%H-%M-%S')"
+           docker push $IMAGE_TAG       
     
