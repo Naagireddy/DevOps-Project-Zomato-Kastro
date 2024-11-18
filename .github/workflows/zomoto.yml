@@ -100,8 +100,8 @@ jobs:
       id: task-def
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
-        task-definition: ${{ env.ECS_TASK_DEFINITION }}
-        container-name: ${{ env.CONTAINER_NAME }}
+        task-definition:  my-task-definition
+        container-name: zomotocontainer
         image: "${{ secrets.DOCKER_USERNAME }}/zomoto:${{github.run_number}}"
         #${{ steps.build-image.outputs.image }}
 
