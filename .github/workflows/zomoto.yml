@@ -28,6 +28,12 @@ jobs:
       with: 
           username: ${{ secrets.DOCKER_USERNAME}}
           password: ${{  secrets.DOCKER_PASSWORD}}
+    - name: Set up AWS CLI
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}      
 
     - name: Set image tag with timestamp
       id: set_tag
@@ -47,5 +53,9 @@ jobs:
     - name: Push Docker image to DockerHub
       run: |
            #IMAGE_TAG="zomoto" #:$(date +'%Y-%m-%d_%H-%M-%S')"
-           docker push $IMAGE_TAG       
+           docker push $IMAGE_TAG  
+
+    - name: Create ECS Cluster
+      run: |
+          aws ecs create-cluster --cluster-name my-cluster       
     
