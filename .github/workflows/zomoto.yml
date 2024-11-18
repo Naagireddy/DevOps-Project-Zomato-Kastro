@@ -90,11 +90,11 @@ jobs:
 
     - name: Run ECS Service
       run: |
-          aws ecs create-service \
-            --cluster my-cluster \
-            --service-name my-service \
-            --task-definition my-task-definition \
-            --desired-count 1 \
-            #--launch-type FARGATE \
-            --network-configuration "awsvpcConfiguration={subnets=[subnet-08536ee300c198cda],securityGroups=[sg-09530adb6fafe01c1],assignPublicIp=ENABLED}"
-    
+        aws ecs create-service \
+          --cluster my-cluster \
+          --service-name my-service \
+          --task-definition my-task-definition \
+          --desired-count 1 \
+          --launch-type FARGATE \
+          --network-configuration "awsvpcConfiguration={subnets=[subnet-08536ee300c198cda],securityGroups=[sg-09530adb6fafe01c1],assignPublicIp=ENABLED}"
+
